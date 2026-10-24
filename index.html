@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Load Gadi – Balu, Gitti, Brick in Patna</title>
+<meta name="description" content="Load Gadi: buy and sell balu, gitti and bricks in Patna. Live loaded gadis near you.">
+<link rel="icon" type="image/png" href="icon-512.png">
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Load Gadi: buy and sell balu, gitti and bricks in Patna. See live loaded gadis near you, compare rates per CFT or ton, call the seller directly.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Teko:wght@500;600;700&family=Hind:wght@400;500;600&display=swap">
+<style>
+/* Layout: a brick-red masthead like a painted truck tailboard, a sand-dune band, then plain sections for buyers, sellers, zones and download */
+:root {
+  --brick: #B4441F; --brick-deep: #8E3214; --sand: #F2C46D; --soil: #3A1A0E;
+  --bg: #FFFBF4; --fg: #2A1D16; --muted: #6B5A4F; --card: #FFFFFF; --line: #EBDCC8;
+  --ok: #2E7D32; --stop: #C62828;
+  --display: "Teko", "Hind", "Arial Narrow", sans-serif;
+  --body: "Hind", "Noto Sans Devanagari", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #1A1310; --fg: #F3E8DD; --muted: #BCA898; --card: #261C17; --line: #3B2C24;
+  --ok: #66BB6A; --stop: #EF5350; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #1A1310; --fg: #F3E8DD; --muted: #BCA898; --card: #261C17; --line: #3B2C24;
+  --ok: #66BB6A; --stop: #EF5350; color-scheme: dark }
+
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font: 400 1.05rem/1.6 var(--body); }
+.wrap { max-width: 68rem; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+h1, h2, h3 { font-family: var(--display); font-weight: 600; line-height: 1; margin: 0; text-wrap: balance; letter-spacing: .01em; }
+p { margin: 0; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--sand); outline-offset: 2px; }
+
+/* Language: show the right copy */
+[data-lang="en"] .hi, [data-lang="hi"] .en { display: none !important; }
+
+/* Top bar */
+.top { background: var(--brick); color: #fff; }
+.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-block: 14px; }
+.brand { display: flex; align-items: center; gap: 10px; font-family: var(--display); font-size: 1.9rem; font-weight: 700; text-decoration: none; }
+.brand svg { width: 44px; height: 44px; flex: none; }
+.lang { display: inline-flex; border: 1.5px solid rgba(255,255,255,.6); border-radius: 999px; overflow: hidden; }
+.lang button { font: 600 .95rem var(--body); background: transparent; color: #fff; border: 0; padding: 6px 14px; cursor: pointer; }
+.lang button[aria-pressed="true"] { background: #fff; color: var(--brick); }
+
+/* Hero */
+.hero { background: var(--brick); color: #fff; position: relative; overflow: hidden; }
+.hero .wrap { display: grid; grid-template-columns: 1.15fr .85fr; gap: 32px; align-items: center; padding-block: 28px 0; }
+.hero h1 { font-size: clamp(3rem, 9vw, 5.6rem); font-weight: 700; }
+.hero h1 span { color: var(--sand); }
+.hero .lede { font-size: 1.2rem; max-width: 34rem; margin-top: 12px; color: #FCE9D6; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+.chip { font-weight: 600; font-size: .95rem; padding: 4px 12px; border-radius: 999px; background: rgba(255,255,255,.14); }
+.cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; padding-bottom: 44px; }
+.btn { display: inline-flex; align-items: center; gap: 8px; font: 600 1rem var(--body); text-decoration: none; padding: 12px 20px; border-radius: 10px; border: 0; cursor: pointer; }
+.btn-sand { background: var(--sand); color: var(--soil); }
+.btn-ghost { background: transparent; color: #fff; box-shadow: inset 0 0 0 2px rgba(255,255,255,.7); }
+.dune { display: block; width: 100%; height: 70px; }
+.dune path { fill: var(--sand); }
+
+/* Phone mock with a live-looking load card */
+.phone { justify-self: center; width: min(300px, 100%); background: var(--soil); border-radius: 34px; padding: 12px; box-shadow: 0 24px 50px rgba(0,0,0,.35); margin-bottom: -40px; position: relative; z-index: 1; }
+.screen { background: #FFFBF4; color: #2A1D16; border-radius: 24px; overflow: hidden; }
+.screen .bar { background: var(--brick); color: #fff; font: 600 .95rem var(--body); padding: 12px 14px; }
+.map { height: 150px; position: relative; background:
+  linear-gradient(90deg, rgba(58,26,14,.06) 1px, transparent 1px) 0 0/24px 24px,
+  linear-gradient(rgba(58,26,14,.06) 1px, transparent 1px) 0 0/24px 24px, #F4EBDD; }
+.map .road { position: absolute; left: -10%; top: 58%; width: 120%; height: 10px; background: #fff; transform: rotate(-12deg); }
+.map .river { position: absolute; left: -10%; top: 8%; width: 120%; height: 22px; background: #BFD9E8; transform: rotate(4deg); }
+.pin { position: absolute; width: 18px; height: 18px; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); border: 2px solid #fff; }
+.pin.me { background: #1E66D0; border-radius: 50%; transform: none; width: 14px; height: 14px; box-shadow: 0 0 0 6px rgba(30,102,208,.2); }
+.mini { display: grid; gap: 8px; padding: 10px; }
+.load { background: #fff; border: 1px solid #EBDCC8; border-radius: 12px; padding: 10px 12px; font-size: .85rem; line-height: 1.35; }
+.load .row { display: flex; justify-content: space-between; gap: 8px; font-weight: 600; font-size: .95rem; }
+.load .rate { color: var(--brick); }
+.load .meta { color: #6B5A4F; }
+.badge { display: inline-block; font-size: .75rem; font-weight: 600; padding: 1px 8px; border-radius: 6px; margin-top: 4px; }
+.badge.reg { color: #2E7D32; background: rgba(46,125,50,.12); }
+.badge.ne { color: #C62828; background: rgba(198,40,40,.12); }
+
+/* Sections */
+section { padding-block: 64px 8px; }
+.kicker { font: 600 .82rem var(--body); letter-spacing: .1em; text-transform: uppercase; color: var(--brick); }
+[data-theme="dark"] .kicker { color: var(--sand); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .kicker { color: var(--sand); } }
+.sec-head { display: grid; gap: 6px; margin-bottom: 26px; max-width: 40rem; }
+.sec-head h2 { font-size: clamp(2.2rem, 5vw, 3.2rem); }
+.sec-head p { color: var(--muted); }
+
+.materials { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.mat { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 20px; display: grid; gap: 6px; align-content: start; }
+.mat .swatch { width: 44px; height: 44px; border-radius: 12px; }
+.mat h3 { font-size: 2rem; }
+.mat .unit { font-weight: 600; font-variant-numeric: tabular-nums; }
+.mat p { color: var(--muted); font-size: .98rem; }
+
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.panel { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 24px; display: grid; gap: 14px; align-content: start; }
+.panel h3 { font-size: 2.2rem; }
+.steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; counter-reset: s; }
+.steps li { counter-increment: s; display: grid; grid-template-columns: 34px 1fr; gap: 12px; align-items: start; }
+.steps li::before { content: counter(s); font: 700 1.5rem/34px var(--display); text-align: center; width: 34px; height: 34px; border-radius: 50%; background: var(--sand); color: var(--soil); }
+
+.zones { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.zone { border-radius: 18px; padding: 24px; border: 2px solid; display: grid; gap: 8px; align-content: start; background: var(--card); }
+.zone.reg { border-color: var(--ok); }
+.zone.ne { border-color: var(--stop); }
+.zone h3 { font-size: 2.2rem; }
+.zone.reg h3 { color: var(--ok); }
+.zone.ne h3 { color: var(--stop); }
+.zone p { color: var(--muted); }
+.note { margin-top: 16px; color: var(--muted); font-size: .95rem; max-width: 46rem; }
+
+.trust { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.trust div { border-top: 3px solid var(--brick); padding-top: 12px; display: grid; gap: 4px; }
+.trust strong { font-family: var(--display); font-size: 1.6rem; font-weight: 600; line-height: 1.05; }
+.trust span { color: var(--muted); font-size: .96rem; }
+
+.get { background: var(--soil); color: #FCE9D6; border-radius: 22px; padding: 32px; display: grid; grid-template-columns: 1.3fr 1fr; gap: 24px; align-items: center; margin-block: 64px; }
+.get h2 { font-size: clamp(2.2rem, 5vw, 3rem); color: #fff; }
+.get p { margin-top: 8px; }
+.get .soon { display: inline-block; margin-top: 14px; font-weight: 600; background: rgba(242,196,109,.18); color: var(--sand); padding: 4px 12px; border-radius: 999px; }
+.contact { display: grid; gap: 10px; }
+.contact .line { background: rgba(255,255,255,.07); border-radius: 12px; padding: 12px 14px; display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+.contact .line span { font-weight: 600; user-select: all; word-break: break-all; }
+.copy { font: 600 .85rem var(--body); background: var(--sand); color: var(--soil); border: 0; border-radius: 8px; padding: 6px 10px; cursor: pointer; }
+
+footer { border-top: 1px solid var(--line); }
+footer .wrap { padding-block: 22px 32px; display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: space-between; color: var(--muted); font-size: .92rem; }
+
+@media (max-width: 820px) {
+  .hero .wrap, .split, .zones, .get { grid-template-columns: 1fr; }
+  .phone { margin-bottom: -30px; }
+  .materials { grid-template-columns: 1fr; }
+  .trust { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 420px) { .trust { grid-template-columns: 1fr; } .get { padding: 22px; } }
+@media (prefers-reduced-motion: no-preference) {
+  .truckmove { animation: roll 6s ease-in-out infinite alternate; }
+  @keyframes roll { from { transform: translateX(-4px); } to { transform: translateX(4px); } }
+}
+</style>
+<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<div id="site" data-lang="en">
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Load Gadi home">
+      <svg viewBox="0 0 108 108" aria-hidden="true"><rect width="108" height="108" rx="24" fill="#8E3214"/><g transform="translate(54 56) scale(1.4) translate(-54 -56)"><path fill="#F2C46D" d="M32,50 Q44,34 58,50 Z"/><path fill="#fff" d="M30,50 H60 V64 H30 Z"/><path fill="#fff" d="M62,54 H72 L78,60 V64 H62 Z"/><circle cx="40" cy="68" r="5" fill="#3A1A0E"/><circle cx="70" cy="68" r="5" fill="#3A1A0E"/></g></svg>
+      <span class="en">Load Gadi</span><span class="hi">लोड गाड़ी</span>
+    </a>
+    <div class="lang" role="group" aria-label="Language">
+      <button type="button" id="btn-en" aria-pressed="true">English</button>
+      <button type="button" id="btn-hi" aria-pressed="false">हिंदी</button>
+    </div>
+  </div>
+</header>
+
+<div class="hero" id="top">
+  <div class="wrap">
+    <div>
+      <h1 class="en">Balu, gitti, brick.<br><span>Live near you.</span></h1>
+      <h1 class="hi">बालू, गिट्टी, ईंट।<br><span>आपके पास, लाइव।</span></h1>
+      <p class="lede en">Load Gadi shows loaded tractors, trolleys and trucks around you in Patna on a live map. Compare rates, check the delivery zone, and call the seller directly.</p>
+      <p class="lede hi">लोड गाड़ी पटना में आपके आस-पास माल से भरे ट्रैक्टर, ट्रॉली और ट्रक लाइव मैप पर दिखाता है। रेट मिलाइए, डिलीवरी ज़ोन देखिए और सीधे विक्रेता को कॉल कीजिए।</p>
+      <div class="chips">
+        <span class="chip en">Rate per CFT or per ton</span><span class="chip hi">CFT या टन के हिसाब से रेट</span>
+        <span class="chip en">No commission</span><span class="chip hi">कोई कमीशन नहीं</span>
+        <span class="chip en">e-challan checked</span><span class="chip hi">ई-चालान ज़रूरी</span>
+      </div>
+      <div class="cta">
+        <a class="btn btn-sand" href="#get"><span class="en">Get the app</span><span class="hi">ऐप पाएँ</span></a>
+        <a class="btn btn-ghost" href="#sell"><span class="en">I sell material</span><span class="hi">मैं माल बेचता हूँ</span></a>
+      </div>
+    </div>
+
+    <div class="phone" aria-label="Load Gadi app preview">
+      <div class="screen">
+        <div class="bar"><span class="en">Loads near you</span><span class="hi">आपके पास के लोड</span></div>
+        <div class="map" aria-hidden="true">
+          <div class="river"></div><div class="road"></div>
+          <span class="pin" style="left:22%;top:40%;background:#E0A100"></span>
+          <span class="pin" style="left:62%;top:28%;background:#4F6D8A"></span>
+          <span class="pin" style="left:74%;top:66%;background:#B4441F"></span>
+          <span class="pin" style="left:40%;top:72%;background:#E0A100"></span>
+          <span class="pin me" style="left:48%;top:50%"></span>
+        </div>
+        <div class="mini">
+          <div class="load">
+            <div class="row"><span><span class="en">Balu</span><span class="hi">बालू</span> • 300 CFT</span><span class="rate">₹38 / CFT</span></div>
+            <div class="meta"><span class="en">Tractor</span><span class="hi">ट्रैक्टर</span> BR01AB1234 • 1.2 km</div>
+            <span class="badge reg"><span class="en">Regular zone</span><span class="hi">सामान्य ज़ोन</span></span>
+          </div>
+          <div class="load">
+            <div class="row"><span><span class="en">Gitti</span><span class="hi">गिट्टी</span> • 12 Ton</span><span class="rate">₹1,450 / Ton</span></div>
+            <div class="meta"><span class="en">Truck</span><span class="hi">ट्रक</span> BR06GD5521 • 3.8 km</div>
+            <span class="badge ne"><span class="en">No-entry zone</span><span class="hi">नो-एंट्री ज़ोन</span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <svg class="dune" viewBox="0 0 1200 70" preserveAspectRatio="none" aria-hidden="true"><path d="M0,70 L0,40 Q300,0 600,30 T1200,20 L1200,70 Z"/></svg>
+</div>
+
+<main>
+  <section class="wrap" aria-labelledby="mat-h">
+    <div class="sec-head">
+      <span class="kicker en">What you can buy</span><span class="kicker hi">क्या मिलेगा</span>
+      <h2 id="mat-h"><span class="en">Three materials, honest units</span><span class="hi">तीन माल, सही हिसाब</span></h2>
+    </div>
+    <div class="materials">
+      <div class="mat">
+        <div class="swatch" style="background:#E0A100"></div>
+        <h3><span class="en">Balu</span><span class="hi">बालू</span></h3>
+        <span class="unit en">per CFT or per ton</span><span class="unit hi">प्रति CFT या प्रति टन</span>
+        <p class="en">Sand by tractor, trolley or truck. Mining e-challan number required on every load.</p>
+        <p class="hi">ट्रैक्टर, ट्रॉली या ट्रक से बालू। हर लोड पर माइनिंग ई-चालान नंबर ज़रूरी।</p>
+      </div>
+      <div class="mat">
+        <div class="swatch" style="background:#4F6D8A"></div>
+        <h3><span class="en">Gitti</span><span class="hi">गिट्टी</span></h3>
+        <span class="unit en">per CFT or per ton</span><span class="unit hi">प्रति CFT या प्रति टन</span>
+        <p class="en">Stone chips for RCC and roads. e-challan required, so you get lawful material.</p>
+        <p class="hi">ढलाई और सड़क के लिए गिट्टी। ई-चालान ज़रूरी, ताकि माल वैध हो।</p>
+      </div>
+      <div class="mat">
+        <div class="swatch" style="background:#B4441F"></div>
+        <h3><span class="en">Brick</span><span class="hi">ईंट</span></h3>
+        <span class="unit en">per piece</span><span class="unit hi">प्रति पीस</span>
+        <p class="en">Bricks straight from the gadi. See quantity and rate before you call.</p>
+        <p class="hi">गाड़ी से सीधे ईंट। कॉल करने से पहले मात्रा और रेट देखिए।</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap" aria-labelledby="how-h">
+    <div class="sec-head">
+      <span class="kicker en">How it works</span><span class="kicker hi">कैसे काम करता है</span>
+      <h2 id="how-h"><span class="en">Buyer meets gadi. Directly.</span><span class="hi">खरीदार और गाड़ी, सीधे।</span></h2>
+    </div>
+    <div class="split">
+      <div class="panel">
+        <h3><span class="en">If you are buying</span><span class="hi">अगर आप खरीद रहे हैं</span></h3>
+        <ol class="steps">
+          <li><span class="en">Open Load Gadi and tap <strong>Buy material</strong>. No login needed.</span><span class="hi">लोड गाड़ी खोलिए और <strong>माल खरीदें</strong> दबाइए। लॉगिन की ज़रूरत नहीं।</span></li>
+          <li><span class="en">See loaded gadis on the map, nearest first. Filter by material and zone.</span><span class="hi">मैप पर भरी हुई गाड़ियाँ देखिए, सबसे नज़दीकी पहले। माल और ज़ोन से छाँटिए।</span></li>
+          <li><span class="en">Compare rate per CFT or ton, then tap <strong>Call</strong> or <strong>WhatsApp</strong>.</span><span class="hi">CFT या टन का रेट मिलाइए, फिर <strong>कॉल</strong> या <strong>WhatsApp</strong> दबाइए।</span></li>
+        </ol>
+      </div>
+      <div class="panel" id="sell">
+        <h3><span class="en">If you are selling</span><span class="hi">अगर आप बेच रहे हैं</span></h3>
+        <ol class="steps">
+          <li><span class="en">Log in with your mobile number and OTP.</span><span class="hi">मोबाइल नंबर और OTP से लॉगिन कीजिए।</span></li>
+          <li><span class="en">Post the load: material, quantity, CFT or weight, rate, vehicle number, e-challan and zone.</span><span class="hi">लोड डालिए: माल, मात्रा, CFT या वज़न, रेट, गाड़ी नंबर, ई-चालान और ज़ोन।</span></li>
+          <li><span class="en">Your gadi shows live to buyers until you mark the load <strong>Sold</strong>.</span><span class="hi">लोड को <strong>बिका</strong> मार्क करने तक आपकी गाड़ी खरीदारों को लाइव दिखती है।</span></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap" aria-labelledby="zone-h">
+    <div class="sec-head">
+      <span class="kicker en">Built for Patna's roads</span><span class="kicker hi">पटना की सड़कों के लिए</span>
+      <h2 id="zone-h"><span class="en">Two delivery zones</span><span class="hi">दो डिलीवरी ज़ोन</span></h2>
+      <p class="en">Heavy vehicles can't enter parts of the city during the day. Every load says which zone it serves, so you know when it can reach your site.</p>
+      <p class="hi">दिन में शहर के कई हिस्सों में भारी गाड़ियों की एंट्री बंद रहती है। हर लोड पर ज़ोन लिखा होता है, ताकि आपको पता रहे कि माल साइट पर कब पहुँचेगा।</p>
+    </div>
+    <div class="zones">
+      <div class="zone reg">
+        <h3><span class="en">Regular zone</span><span class="hi">सामान्य ज़ोन</span></h3>
+        <p class="en">Delivery anytime. For sites outside no-entry roads and timings.</p>
+        <p class="hi">किसी भी समय डिलीवरी। नो-एंट्री सड़कों और समय से बाहर की साइटों के लिए।</p>
+      </div>
+      <div class="zone ne">
+        <h3><span class="en">No-entry zone</span><span class="hi">नो-एंट्री ज़ोन</span></h3>
+        <p class="en">Delivery only when no-entry opens, usually at night. Plan your unloading crew for it.</p>
+        <p class="hi">डिलीवरी सिर्फ़ नो-एंट्री खुलने पर, आमतौर पर रात में। उतारने वाले मज़दूर पहले से तय रखिए।</p>
+      </div>
+    </div>
+    <p class="note en">No-entry timings differ by road and change often. Always confirm the delivery time with the seller on the call.</p>
+    <p class="note hi">नो-एंट्री का समय सड़क के हिसाब से अलग होता है और बदलता रहता है। कॉल पर विक्रेता से डिलीवरी का समय ज़रूर पक्का कीजिए।</p>
+  </section>
+
+  <section class="wrap" aria-label="Why Load Gadi">
+    <div class="trust">
+      <div><strong class="en">Live location</strong><strong class="hi">लाइव लोकेशन</strong><span class="en">See where the loaded gadi actually is right now.</span><span class="hi">भरी हुई गाड़ी अभी कहाँ है, खुद देखिए।</span></div>
+      <div><strong class="en">Direct contact</strong><strong class="hi">सीधा संपर्क</strong><span class="en">Call or WhatsApp the seller. No broker cut.</span><span class="hi">विक्रेता को सीधे कॉल या WhatsApp। दलाली नहीं।</span></div>
+      <div><strong class="en">Lawful balu</strong><strong class="hi">वैध बालू</strong><span class="en">Balu and gitti loads carry a mining e-challan number.</span><span class="hi">बालू और गिट्टी के हर लोड पर ई-चालान नंबर।</span></div>
+      <div><strong class="en">Hindi and English</strong><strong class="hi">हिंदी और अंग्रेज़ी</strong><span class="en">The whole app works in both languages.</span><span class="hi">पूरा ऐप दोनों भाषाओं में।</span></div>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <div class="get" id="get">
+      <div>
+        <h2><span class="en">Get Load Gadi</span><span class="hi">लोड गाड़ी पाएँ</span></h2>
+        <p class="en">Android app, free. Google Play release is on the way. Until then, message us on WhatsApp and we'll send you the app to install.</p>
+        <p class="hi">एंड्रॉइड ऐप, मुफ़्त। Google Play पर जल्द आ रहा है। तब तक WhatsApp पर मैसेज कीजिए, हम आपको ऐप भेज देंगे।</p>
+        <span class="soon en">Coming soon on Google Play</span><span class="soon hi">जल्द Google Play पर</span>
+      </div>
+      <div class="contact">
+        <div class="line"><span>sidharthassociate@gmail.com</span><button class="copy" type="button" data-copy="sidharthassociate@gmail.com"><span class="en">Copy</span><span class="hi">कॉपी</span></button></div>
+        <div class="line"><span class="en">WhatsApp: add your number</span><span class="hi">WhatsApp: अपना नंबर जोड़ें</span></div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Grihakriti Construction Pvt. Ltd., Patna, Bihar</span>
+    <a href="privacy.html"><span class="en">Privacy policy</span><span class="hi">गोपनीयता नीति</span></a>
+  </div>
+</footer>
+</div>
+
+<script>
+(function () {
+  var site = document.getElementById('site');
+  var en = document.getElementById('btn-en'), hi = document.getElementById('btn-hi');
+  function setLang(l) {
+    site.setAttribute('data-lang', l);
+    document.documentElement.lang = l;
+    en.setAttribute('aria-pressed', l === 'en');
+    hi.setAttribute('aria-pressed', l === 'hi');
+    try { localStorage.setItem('lg-lang', l); } catch (e) {}
+  }
+  en.addEventListener('click', function () { setLang('en'); });
+  hi.addEventListener('click', function () { setLang('hi'); });
+  var saved = null;
+  try { saved = localStorage.getItem('lg-lang'); } catch (e) {}
+  setLang(saved === 'hi' ? 'hi' : 'en');
+
+  document.querySelectorAll('.copy').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var text = b.getAttribute('data-copy');
+      var done = function () { var old = b.innerHTML; b.textContent = '✓'; setTimeout(function () { b.innerHTML = old; }, 1500); };
+      if (navigator.clipboard) navigator.clipboard.writeText(text).then(done, function () {});
+    });
+  });
+})();
+</script>
+</body>
+</html>
